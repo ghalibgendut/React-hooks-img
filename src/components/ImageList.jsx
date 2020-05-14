@@ -1,10 +1,10 @@
 import React from 'react'
 
 
-const ImageList = () => {
-    return (
+const ImageList = (props) => {
+    return(
         <div>
-            <h1>Image List Component</h1>
+            <h1>Terdapat {props.images.length} Gambar</h1>
         </div>
     )
 }

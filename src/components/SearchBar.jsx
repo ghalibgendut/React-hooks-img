@@ -1,17 +1,29 @@
-import React, {useState} from 'react'
+import React, {useRef}from 'react'
 
 
-const SearchBar = () => {
 
-    const [keywords, setKeywods] = useState('Kamis')
+const SearchBar = (props) => {
+
+    const keywordRef = useRef()
+    const amountRef = useRef()
+
+    const onKirim = (e) => {
+        // agar halaman tidak refesh
+        e.preventDefault()
+
+        props.onSearchImage(
+            keywordRef.current.value,
+            amountRef.current.value
+        )
+    }
 
     return (
         <div>
-            {/* Memunculkan alert Keywords */}
-            <button onClick={()=>{alert(keywords)}} >Munculkan Keywords</button>
-
-            {/* Mengubah Keywords */}
-            <button onClick={()=>{setKeywods(`Ganti Jadi Jum'at`)}} >Ganti Keywords</button>
+            <form onSubmit = {onKirim} className="form-group">
+                <input ref = {keywordRef} className="form-control" type="text" placeholder="Imgaes"/>
+                <input ref = {amountRef} className="form-control my-3" type="text" placeholder="How many?"/>
+                <input className="btn btn-block btn-outline-primary" type="submit" value="Search"/>
+            </form>
         </div>
     )
 }
