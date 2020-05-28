@@ -1,36 +1,33 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import axios from '../config/axios'
+import { BrowserRouter, Route } from 'react-router-dom'
+
 // Components
-import SearchBar from './SearchBar'
-import ImageList from './ImageList'
+import Favorite from './Favorite'
+import Home from './Home'
+import Header from './Header'
 
-
+// Context
+import FavContextProvider from '../config/context/FavContext'
 
 const App = () => {
 
     const [images, setImages] = useState([])
 
-    const onSearchImage = (keyword, amount) => {
-        const config = {
-            params: {
-                query: keyword,
-                per_page: amount
-            }
-        }
-        
-
-        axios.get('/search/photos', config)
-            .then(res=>setImages(res.data.results))
-            .catch(err=>console.log({err}))
-    }
-
 
     return (
-        <div className='container'>
-            <h1 className='text-center'>HOOKS REACT IMAGE</h1>
-            <SearchBar onSearchImage={onSearchImage} />
-            <ImageList images={images}/>
-        </div>
+        <BrowserRouter>
+            <Header/>
+            <div className='container'>
+                <FavContextProvider>
+                    <Route path='/' exact component={Home} />
+                    <Route path='/favorites' component={Favorite} />
+                </FavContextProvider>
+                {/* <SearchBar onSearchImage={onSearchImage} />
+                <ImageList images={images} />
+                <Route path='/' exact Componenet={Home} /> */}
+            </div>
+        </BrowserRouter>
     )
 }
 
